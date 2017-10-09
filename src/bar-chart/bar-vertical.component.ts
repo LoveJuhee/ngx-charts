@@ -88,6 +88,7 @@ export class BarVerticalComponent extends BaseChartComponent {
   @Input() roundDomains: boolean = false;
   @Input() roundEdges: boolean = true;
   @Input() yAxisMinScale: number = 0;
+  @Input() yAxisMaxScale: number = 0;
 
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
@@ -155,8 +156,8 @@ export class BarVerticalComponent extends BaseChartComponent {
 
   getYDomain() {
     const values = this.results.map(d => d.value);
-    const min = Math.min(0, ...values);
-    const max = Math.max(this.yAxisMinScale, ...values);
+    const min = (this.yAxisMinScale) ? this.yAxisMinScale : Math.min(0, ...values);
+    const max = (this.yAxisMaxScale) ? this.yAxisMaxScale : Math.max(min, ...values);
     return [min, max];
   }
 
